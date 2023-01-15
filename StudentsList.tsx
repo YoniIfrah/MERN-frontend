@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import { StyleSheet, Image, View, StatusBar, Platform, TouchableOpacity, Text, Button, FlatList } from 'react-native';
+import { StyleSheet, Image, View, StatusBar, Platform, TouchableOpacity, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import Imgs from './ImgBundler'
 import  OS  from './OS_Adapter';
 
@@ -42,28 +42,36 @@ const students: Array<Student> = [
     },
 ]
 
-const ListItem: FC<{ name: String, id: String, image: String }> =
-  ({ name, id, image }) => {
+const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:String) => void}> = ({ name, id, image, onRowSelected }) => 
+{
+    const onClick=() => {
+        console.log('onClick called with id:  ', id)
+        onRowSelected(id)
+    }
  return (
-   <View style={styles.listRow}>
-     <Image style={styles.listRowImage}
-            source={Imgs.ava}/>
-     <View style={styles.listRowTextContainer}>
-       <Text style={styles.listRowName}>{name}</Text>
-       <Text style={styles.listRowId}>{id}</Text>
-     </View>
-   </View>
+    <TouchableHighlight onPress={onClick} underlayColor={'gainsboro'}>
+    <View style={styles.listRow}>
+        <Image style={styles.listRowImage}
+                source={Imgs.ava}/>
+        <View style={styles.listRowTextContainer}>
+        <Text style={styles.listRowName}>{name}</Text>
+        <Text style={styles.listRowId}>{id}</Text>
+        </View>
+    </View>
+    </TouchableHighlight>
 ) }
 
-const StudentList: FC = () => {
+const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => {
+    const onRowSelected = (id:String) =>{
+        console.log('selected row was ', id);
+    }
     return(
         <FlatList style={styles.flatlist}
         data={students}
         keyExtractor={student => student.id.toString()}
         renderItem={({ item }) => (
-          <ListItem name={item.name} id={item.id} image={item.image} />
-        )}
- >
+          <ListItem name={item.name} id={item.id} image={item.image} onRowSelected={onRowSelected}/>
+        )}>
       </FlatList>
     )
 }

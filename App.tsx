@@ -1,6 +1,5 @@
 import {FC, useEffect, useState} from 'react';
 import { StyleSheet, Image, View, TouchableOpacity, Text, Button } from 'react-native';
-import Constants from 'expo-constants';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import imgs from './ImgBundler';
@@ -8,72 +7,52 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import StudentList from './StudentsList';
 import OS from './OS_Adapter'
+import StudentDetails from './StudentDetails';
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator()
+const StudentStack = createNativeStackNavigator()
 
 
-const HomeScreen: FC<{route:any, navigation: any }> = ({route, navigation}) => { 
-  const [message, setMessage] = useState('non...')
-  useEffect (() => {
-    console.log('useEffect ' + route.params?.newPostId)
-    if(route.params?.newPostId) setMessage(JSON.stringify(route.params.newPostId))
-  },[route.params?.newPostId])
-
-  return (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Home Screen</Text> 
-    <Text>id: {message}</Text>
-
-    <Button
-      title="Go to Details... again"
-      onPress={() => navigation.navigate('Details', {itemId:'12345' })}/>
-  </View>
-  ); 
-}
 const DetailsScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
-  const itemId = JSON.stringify(route.params.itemId)
-  const name = JSON.stringify(route.params.name)
-  useEffect(() => {
-    console.log('useeffects')
-    navigation.setOptions({
-      title: "my new title",
-    })
-  })
+  // const itemId = JSON.stringify(route.params.itemId)
+  // const name = JSON.stringify(route.params.name)
+  // useEffect(() => {
+  //   console.log('useeffects')
+  //   navigation.setOptions({
+  //     title: "my new title",
+  //   })
+  // })
   return (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
     <Text>Details Screen</Text>
-    <Text>id: {itemId}</Text>
-    <Text>{name}</Text>
+    {/* <Text>id: {itemId}</Text>
+    <Text>{name}</Text> */}
 
-    <Button
+    {/* <Button
       title="Go to Home... again"
-      onPress={() => navigation.navigate('Home', {newPostId:'6666'})}/>
+      onPress={() => navigation.navigate('Home', {newPostId:'6666'})}/> */}
   </View>
   ); 
 }
-const HeaderTitle: FC = () =>{
+
+const StudentStackCp: FC = () =>{
   return(
-    <TouchableOpacity onPress={() => {console.log('image press')}}>
-
-    <Image
-     style={{height:50, width:50}}
-     source={imgs.ava}
-     />
-     </TouchableOpacity>
-
-
+    <StudentStack.Navigator>
+      <StudentStack.Screen name='StudentList' component={StudentList} />
+      <StudentStack.Screen name='StudentDetails' component={StudentDetails} />
+    </StudentStack.Navigator>
   )
 }
+
 const App: FC = () => { 
   return (
   <NavigationContainer>
 
       <Tab.Navigator screenOptions={({ route }) => ({ tabBarIcon: ({ focused, color, size }) => {
         let iconName ="";
-        if (route.name === 'Home') {
+        if (route.name === 'Details') {
         iconName = focused  ? 'information-circle': 'information-circle-outline';
-        } else if (route.name === 'Details') {
+        } else if (route.name === 'StudentStackCp') {
         iconName = focused ? 'list-circle' : 'list-circle-outline';
         }
         // You can return any component that you like here!
@@ -81,13 +60,18 @@ const App: FC = () => {
       },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray', })}>
-        <Tab.Screen name='Home' component={StudentList}/>
+        <Tab.Screen name='StudentStackCp' component={StudentStackCp} options={{headerShown:false}}/>
         <Tab.Screen name='Details' component={DetailsScreen} initialParams={{id:'123123'}}/>
 
      </Tab.Navigator>
   </NavigationContainer>
 )
 }
+// const App:FC = () =>{
+//   return(
+//     <StudnetDetails></StudnetDetails>
+//   )
+// }
 
 
 const styles = StyleSheet.create({
