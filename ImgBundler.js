@@ -13,6 +13,7 @@ import owin from './assets/owin.gif';
 import xplay from './assets/xplay.gif';
 import xwin from './assets/xwin.gif';
 import reset from './assets/reset.png';
+import ava from './assets/ava.png';
 
 
 
@@ -31,7 +32,8 @@ export default  {
     'owin' : owin,
     'xplay' : xplay,
     'xwin' : xwin,
-    'reset' : reset
+    'reset' : reset,
+    'ava': ava,
 
 }
 
