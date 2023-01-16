@@ -64,6 +64,7 @@ const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:
 const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => {
     const onRowSelected = (id:String) =>{
         console.log('selected row was ', id);
+        navigation.navigate('StudentDetails', {studentId: id})
     }
     return(
         <FlatList style={styles.flatlist}

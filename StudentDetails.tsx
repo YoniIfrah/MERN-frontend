@@ -15,9 +15,9 @@ const StudnetDetails:FC<{route:any, navigation: any }> = ({route, navigation}) =
       <Text>Details Screen</Text>
       <Text>{studentId}</Text>
   
-      <Button
+      {/* <Button
         title="Go to Home... again"
-        onPress={() => navigation.navigate('Home', {newPostId:'6666'})}/>
+        onPress={() => navigation.navigate('Home', {newPostId:'6666'})}/> */}
     </View>
     ); 
   }
