@@ -1,54 +1,114 @@
 import {FC, useEffect, useState} from 'react';
-import { StyleSheet, Image, View, TouchableOpacity, Text, Button } from 'react-native';
+import { StyleSheet, Image, View, TouchableOpacity, Text, Button, TextInput, ScrollView } from 'react-native';
 import OS from './OS_Adapter'
+import imgs from './ImgBundler';
+import StudentModel, { Student } from './model/StudentModel';
+
 
 
 const StudentAdd:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
+    const [id, setId]= useState("")
+    const [name, setName]= useState("")
+    const [address, setAddress]= useState("")
 
+    const onPressCallback = () => {
+      console.log("onPressCallback is called")
+    }
+    const onSaveCallback = () => {
+      const student:Student = {
+        id:id,
+        name:name,
+        image:'stam'
+      }
+      StudentModel.addStudent(student)
+      navigation.goBack()
+
+    }
+    const onCancellCallback = () => {
+      navigation.goBack()
+    }
     return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>student add</Text>
+    <ScrollView>
+    <View style={styles.container}>
+        <Image source={imgs.ava} style={styles.avatar} ></Image>
+        <TextInput
+          style={styles.input}
+          onChangeText={setId}
+          value={id}
+          placeholder={'Student ID'}
+      />
+      <TextInput
+          style={styles.input}
+          onChangeText={setName}
+          value={name}
+          placeholder={'Student Name'}
+      />
+      <TextInput
+          style={styles.input}
+          onChangeText={setAddress}
+          value={address}
+          placeholder={'Student Address'}
+      />
+      <View style={styles.buttonesContainer}>
+        <TouchableOpacity onPress={onCancellCallback} style={styles.button}>
+            <Text style={styles.buttonText}>CANCELL</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onSaveCallback} style={styles.button}>
+            <Text style={styles.buttonText}>SAVE</Text>
+        </TouchableOpacity>
+      </View>
     </View>
+    </ScrollView>
     ); 
   }
 
 
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
-      marginTop: OS.statusBar(),
-      flex: 1,
-      backgroundColor: 'grey'
+        flex: 1,
     },
-    row:{
-      flexDirection: 'row',
-      backgroundColor: 'blue',
+    avatar: {
+        height: 250,
+        resizeMode: "contain",
+        alignSelf: 'center',
+        width: '100%'
     },
-    brick:{
-      flex:1,
-      backgroundColor: 'white',
-      margin: 5,
-      aspectRatio: 1
+    cameraButton: {
+        position: 'absolute',
+        bottom: -10,
+        left: 10,
+        width: 50,
+        height: 50,
     },
-    button:{
-      flex:1,
+    galleryButton: {
+        position: 'absolute',
+        bottom: -10,
+        right: 10,
+        width: 50,
+        height: 50,
     },
-    test: {
-      flex:1,
-      backgroundColor: 'red',
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 5,
     },
-    centerContainer:{
-      flex:1,
-      // backgroundColor: 'red',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100%'
+    buttonesContainer: {
+        flexDirection: 'row',
     },
-    image:{
-      // backgroundColor: 'blue',
-      height:100,
-      width:100,
+    button: {
+        flex: 1,
+        margin: 12,
+        padding: 12,
+        backgroundColor: 'blue',
+        borderRadius: 10,
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: 'white'
     }
-  });
+});
+
   
 export default StudentAdd

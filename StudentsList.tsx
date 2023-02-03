@@ -2,45 +2,8 @@ import {FC, useEffect, useState} from 'react';
 import { StyleSheet, Image, View, StatusBar, Platform, TouchableOpacity, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import Imgs from './ImgBundler'
 import  OS  from './OS_Adapter';
+import StudentModel, {Student} from './model/StudentModel';
 
-type Student = {
-    id:String,
-    name:String,
-    image:String,
-}
-
-const students: Array<Student> = [
-    {
-        id: '1',
-        name: 'Student 1',
-        image: ''
-    },
-    {
-        id: '2',
-        name: 'Student 2',
-        image: ''
-    },
-    {
-        id: '3',
-        name: 'Student 3',
-        image: ''
-    },
-    {
-        id: '4',
-        name: 'Student 4',
-        image: ''
-    },
-    {
-        id: '5',
-        name: 'Student 5',
-        image: ''
-    },
-    {
-        id: '6',
-        name: 'Student 6',
-        image: ''
-    },
-]
 
 const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:String) => void}> = ({ name, id, image, onRowSelected }) => 
 {
@@ -66,6 +29,16 @@ const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => 
         console.log('selected row was ', id);
         navigation.navigate('StudentDetails', {studentId: id})
     }
+    const [students, setStudents] = useState<Array<Student>>()
+
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () =>{
+        console.log('focus')
+        setStudents(StudentModel.getAllStudents())    
+        })
+        return unsubscribe
+    })
     return(
         <FlatList style={styles.flatlist}
         data={students}
