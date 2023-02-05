@@ -1,8 +1,8 @@
 import {FC, useEffect, useState} from 'react';
 import { StyleSheet, Image, View, StatusBar, Platform, TouchableOpacity, Text, Button, FlatList, TouchableHighlight } from 'react-native';
-import Imgs from './ImgBundler'
-import  OS  from './OS_Adapter';
-import StudentModel, {Student} from './model/StudentModel';
+import Imgs from '../ImgBundler'
+import  OS  from '../OS_Adapter';
+import StudentModel, {Student} from '../model/StudentModel';
 
 
 const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:String) => void}> = ({ name, id, image, onRowSelected }) => 
@@ -33,9 +33,17 @@ const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => 
 
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () =>{
-        console.log('focus')
-        setStudents(StudentModel.getAllStudents())    
+        const unsubscribe = navigation.addListener('focus', async () => {
+            console.log('focus')
+            let students: Student[] = []
+            try {
+                students = await StudentModel.getAllStudents()
+                console.log("fetching students complete")
+            } catch (err) {
+                console.log("fail fetching students " + err)
+            }
+            console.log("fetching finish")
+            setStudents(students)
         })
         return unsubscribe
     })

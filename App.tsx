@@ -5,10 +5,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import imgs from './ImgBundler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import StudentList from './StudentsList';
+import StudentList from './components/StudentsList';
 import OS from './OS_Adapter'
-import StudentDetails from './StudentDetails';
-import StudentAdd from './StudentAdd';
+import StudentDetails from './components/StudentDetails';
+import StudentAdd from './components/StudentAdd';
 
 const Tab = createBottomTabNavigator()
 const StudentStack = createNativeStackNavigator()
@@ -68,7 +68,7 @@ const App: FC = () => {
         iconName = focused ? 'list-circle' : 'list-circle-outline';
         }
         // You can return any component that you like here!
-        return <Ionicons name  = {iconName} size={size} color={color} />; 
+        return <Ionicons name={iconName} size={size} color={color} />;
       },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray', })}>

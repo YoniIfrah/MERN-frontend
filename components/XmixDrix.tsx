@@ -1,7 +1,7 @@
 import {FC, useState} from 'react';
 import { StyleSheet, Image, View, StatusBar, Platform, TouchableOpacity, Text } from 'react-native';
 import Constants from 'expo-constants';
-import imgs from './ImgBundler';
+import imgs from '../ImgBundler';
 const statusBarHeightIOS = Constants.statusBarHeight;
 const statusBarHeightAndroid = StatusBar.currentHeight;
 
