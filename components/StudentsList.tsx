@@ -14,8 +14,13 @@ const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:
  return (
     <TouchableHighlight onPress={onClick} underlayColor={'gainsboro'}>
     <View style={styles.listRow}>
-        <Image style={styles.listRowImage}
-                source={Imgs.ava}/>
+        {
+            image == ""
+            ? <Image style={styles.listRowImage} source={Imgs.ava}/>
+            : <Image style={styles.listRowImage} source={{uri: image.toString()}}/>
+        }
+         
+
         <View style={styles.listRowTextContainer}>
         <Text style={styles.listRowName}>{name}</Text>
         <Text style={styles.listRowId}>{id}</Text>
@@ -38,6 +43,7 @@ const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => 
             let students: Student[] = []
             try {
                 students = await StudentModel.getAllStudents()
+                console.log(students)
                 console.log("fetching students complete")
             } catch (err) {
                 console.log("fail fetching students " + err)

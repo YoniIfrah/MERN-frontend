@@ -1,44 +1,13 @@
+
+import apiClient from "../api/ClientApi"
 import StudentApi from "../api/StudentApi"
-import FormData from 'form-data'
+import FormData from "form-data"
 
 export type Student = {
-    id:String,
-    name:String,
-    image:String,
+    id: String,
+    name: String,
+    image: String,
 }
-
-const students: Array<Student> = [
-    {
-        id: '1',
-        name: 'Student 1',
-        image: ''
-    },
-    {
-        id: '2',
-        name: 'Student 2',
-        image: ''
-    },
-    {
-        id: '3',
-        name: 'Student 3',
-        image: ''
-    },
-    {
-        id: '4',
-        name: 'Student 4',
-        image: ''
-    },
-    {
-        id: '5',
-        name: 'Student 5',
-        image: ''
-    },
-    {
-        id: '6',
-        name: 'Student 6',
-        image: ''
-    },
-]
 
 const getAllStudents = async () => {
     console.log("getAllStudents()")
@@ -58,37 +27,37 @@ const getAllStudents = async () => {
     return data
 }
 
-const addStudent = (student: Student) => {
+const addStudent = async (student: Student) => {
+    console.log("addStudent")
     const data = {
         _id: student.id,
         name: student.name,
-        avatartUrl: student.image
+        avatarUrl: student.image
     }
     try {
         const res = StudentApi.addStudent(data)
-    } catch (error) {
-        console.log("addStudent error", error)        
+    } catch (err) {
+        console.log("add student fail: " + err)
     }
 }
-const uploadImage = async (imageURI:String) => {
+
+const uploadImage = async (imageURI: String) => {
     var body = new FormData();
-    body.append('file', {name: "name",type: 'image/jpeg',uri: imageURI});
-    let url = '/file/file'
+    body.append('file', { name: "name", type: 'image/jpeg', uri: imageURI });
     try {
         const res = await StudentApi.uploadImage(body)
-        if(!res.ok){
-          console.log("save failed " + res.problem)
-        }else{
+        if (!res.ok) {
+            console.log("save failed " + res.problem)
+        } else {
             if (res.data) {
                 const d: any = res.data
                 console.log("----= url:" + d.url)
                 return d.url
             }
         }
-        
-    } catch (error) {
-        console.log("uploadImage error", error)
+    } catch (err) {
+        console.log("save failed " + err)
     }
- }
-
-export default {getAllStudents, addStudent, uploadImage}
+    return ""
+}
+export default { getAllStudents, addStudent, uploadImage }
