@@ -14,10 +14,16 @@ import xplay from './assets/xplay.gif';
 import xwin from './assets/xwin.gif';
 import reset from './assets/reset.png';
 import ava from './assets/ava.png';
+import Eye from './assets/Eye.png'
+import EyeActive from './assets/EyeActive.png'
+import time_sand from './assets/loading.gif'
 
 
 
 export default  {
+    'time_sand':time_sand,
+    'Eye': Eye,
+    'EyeActive':EyeActive,
     'back': back,
     'empty': empty,
     'mark1': mark1,

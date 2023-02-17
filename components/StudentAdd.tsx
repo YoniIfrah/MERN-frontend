@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from 'react';
 import { StyleSheet, Image, View, TouchableOpacity, Text, Button, TextInput, ScrollView } from 'react-native';
-import OS from '../OS_Adapter'
+import OS from '../utils/OS_Adapter'
 import imgs from '../ImgBundler';
 import StudentModel, { Student } from '../model/StudentModel';
 import * as ImagePicker from 'expo-image-picker';

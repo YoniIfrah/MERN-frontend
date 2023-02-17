@@ -1,17 +1,28 @@
-import {FC, useEffect, useState} from 'react';
-import { StyleSheet, Image, View, TouchableOpacity, Text, Button, TouchableHighlight } from 'react-native';
+import {FC, useCallback, useContext, useEffect, useState} from 'react';
+import { StyleSheet, Image, View, TouchableOpacity, Text, Button, TouchableHighlight, ScrollView, TextInput, ActivityIndicator, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import imgs from './ImgBundler';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import StudentList from './components/StudentsList';
-import OS from './OS_Adapter'
+import OS from './utils/OS_Adapter'
 import StudentDetails from './components/StudentDetails';
 import StudentAdd from './components/StudentAdd';
 
+import * as Keychain from 'react-native-keychain';
+
+
+import { AuthContext, AuthProvider } from './context/AuthContext';
+
+import Navigation from './components/Navigation';
+
+
+
 const Tab = createBottomTabNavigator()
 const StudentStack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
+
 
 
 const InfoScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
@@ -56,34 +67,38 @@ const StudentStackCp:FC<{route:any, navigation: any }> = ({route, navigation}) =
   )
 }
 
-const App: FC = () => { 
-  return (
-  <NavigationContainer>
+// const App: FC = () => { 
+//   return (
+//   <NavigationContainer>
 
-      <Tab.Navigator screenOptions={({ route }) => ({ tabBarIcon: ({ focused, color, size }) => {
-        let iconName ="";
-        if (route.name === 'InfoScreen') {
-        iconName = focused  ? 'information-circle': 'information-circle-outline';
-        } else if (route.name === 'StudentStackCp') {
-        iconName = focused ? 'list-circle' : 'list-circle-outline';
-        }
-        // You can return any component that you like here!
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray', })}>
-        <Tab.Screen name='StudentStackCp' component={StudentStackCp} options={{headerShown:false}}/>
-        <Tab.Screen name='InfoScreen' component={InfoScreen}/>
+//       <Tab.Navigator screenOptions={({ route }) => ({ tabBarIcon: ({ focused, color, size }) => {
+//         let iconName ="";
+//         if (route.name === 'InfoScreen') {
+//         iconName = focused  ? 'information-circle': 'information-circle-outline';
+//         } else if (route.name === 'StudentStackCp') {
+//         iconName = focused ? 'list-circle' : 'list-circle-outline';
+//         }
+//         // You can return any component that you like here!
+//         return <Ionicons name={iconName} size={size} color={color} />;
+//       },
+//         tabBarActiveTintColor: 'tomato',
+//         tabBarInactiveTintColor: 'gray', })}>
+//         <Tab.Screen name='StudentStackCp' component={StudentStackCp} options={{headerShown:false}}/>
+//         <Tab.Screen name='InfoScreen' component={InfoScreen}/>
 
-     </Tab.Navigator>
-  </NavigationContainer>
-)
-}
-// const App:FC = () =>{
-//   return(
-//     <StudnetDetails></StudnetDetails>
-//   )
+//      </Tab.Navigator>
+//   </NavigationContainer>
+// )
 // }
+
+const App:FC = () => {
+  return(
+    <AuthProvider>
+
+      <Navigation/>
+    </AuthProvider>
+  )
+}
 
 
 const styles = StyleSheet.create({
@@ -121,7 +136,14 @@ const styles = StyleSheet.create({
     // backgroundColor: 'blue',
     height:100,
     width:100,
-  }
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+},
 });
 
 export default App

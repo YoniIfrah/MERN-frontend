@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react';
 import { StyleSheet, Image, View, StatusBar, Platform, TouchableOpacity, Text, Button, FlatList, TouchableHighlight } from 'react-native';
 import Imgs from '../ImgBundler'
-import  OS  from '../OS_Adapter';
+import  OS  from '../utils/OS_Adapter';
 import StudentModel, {Student} from '../model/StudentModel';
 
 
