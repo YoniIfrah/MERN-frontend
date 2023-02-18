@@ -9,6 +9,8 @@ import StudentList from './components/StudentsList';
 import OS from './utils/OS_Adapter'
 import StudentDetails from './components/StudentDetails';
 import StudentAdd from './components/StudentAdd';
+import StudentStackCp from './components/StudentStackCp';
+
 
 import * as Keychain from 'react-native-keychain';
 
@@ -16,11 +18,12 @@ import * as Keychain from 'react-native-keychain';
 import { AuthContext, AuthProvider } from './context/AuthContext';
 
 import Navigation from './components/Navigation';
+import ProfileScreen from './screens/ProfileScreen';
 
 
 
 const Tab = createBottomTabNavigator()
-const StudentStack = createNativeStackNavigator()
+// const StudentStack = createNativeStackNavigator()
 const Stack = createNativeStackNavigator();
 
 
@@ -47,25 +50,25 @@ const InfoScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
   ); 
 }
 
-const StudentStackCp:FC<{route:any, navigation: any }> = ({route, navigation}) =>{
-  const addNewStudents = () => {
-    navigation.navigate('StudentAdd')
-  }
-  return(
-    <StudentStack.Navigator>
-      <StudentStack.Screen name='StudentList' component={StudentList} options={{
-        headerRight: () => (
-        <TouchableHighlight onPress={addNewStudents}>
-        <Ionicons name={'add-outline'} size={40} color={'gray'} />
-        </TouchableHighlight > ),
-        }
-        }/>
-      <StudentStack.Screen name='StudentDetails' component={StudentDetails} />
-      <StudentStack.Screen name='StudentAdd' component={StudentAdd} />
+// const StudentStackCp:FC<{route:any, navigation: any }> = ({route, navigation}) =>{
+//   const addNewStudents = () => {
+//     navigation.navigate('StudentAdd')
+//   }
+//   return(
+//     <StudentStack.Navigator>
+//       <StudentStack.Screen name='StudentList' component={StudentList} options={{
+//         headerRight: () => (
+//         <TouchableHighlight onPress={addNewStudents}>
+//         <Ionicons name={'add-outline'} size={40} color={'gray'} />
+//         </TouchableHighlight > ),
+//         }
+//         }/>
+//       <StudentStack.Screen name='StudentDetails' component={StudentDetails} />
+//       <StudentStack.Screen name='StudentAdd' component={StudentAdd} />
 
-    </StudentStack.Navigator>
-  )
-}
+//     </StudentStack.Navigator>
+//   )
+// }
 
 // const App: FC = () => { 
 //   return (
@@ -77,6 +80,10 @@ const StudentStackCp:FC<{route:any, navigation: any }> = ({route, navigation}) =
 //         iconName = focused  ? 'information-circle': 'information-circle-outline';
 //         } else if (route.name === 'StudentStackCp') {
 //         iconName = focused ? 'list-circle' : 'list-circle-outline';
+//         } else if (route.name == 'Profile') {
+//           iconName = focused ? 'person' : 'person-outline';
+//         } else if (route.name == 'Chat') {
+//           iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
 //         }
 //         // You can return any component that you like here!
 //         return <Ionicons name={iconName} size={size} color={color} />;
@@ -85,6 +92,11 @@ const StudentStackCp:FC<{route:any, navigation: any }> = ({route, navigation}) =
 //         tabBarInactiveTintColor: 'gray', })}>
 //         <Tab.Screen name='StudentStackCp' component={StudentStackCp} options={{headerShown:false}}/>
 //         <Tab.Screen name='InfoScreen' component={InfoScreen}/>
+//         {/* need to change the component below to be wth the HomeScreen button (logout)! */}
+//         <Tab.Screen name='Profile' component={ProfileScreen}/>
+//         <Tab.Screen name='Chat' component={InfoScreen}/>
+
+
 
 //      </Tab.Navigator>
 //   </NavigationContainer>
@@ -94,7 +106,6 @@ const StudentStackCp:FC<{route:any, navigation: any }> = ({route, navigation}) =
 const App:FC = () => {
   return(
     <AuthProvider>
-
       <Navigation/>
     </AuthProvider>
   )
