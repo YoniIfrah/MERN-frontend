@@ -6,6 +6,7 @@ import baseURL from '../api/baseUrl';
 type UserInfo = {
   accessToken: string;
   refreshToken: string;
+  email:string
 };
 
 type AuthContextType = {
@@ -19,7 +20,7 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({
   isLoading: false,
-  userInfo: { accessToken: '', refreshToken: '' },
+  userInfo: { accessToken: '', refreshToken: '', email:'' },
   splashLoading: false,
   register: (email: string, password: string) => {},
   login: (email: string, password: string) => {},
@@ -27,7 +28,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
-  const [userInfo, setUserInfo] = useState<UserInfo>({ accessToken: '', refreshToken: '' });
+  const [userInfo, setUserInfo] = useState<UserInfo>({ accessToken: '', refreshToken: '', email:'' });
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
 
@@ -93,7 +94,7 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         console.log('status', res.status);
 
         AsyncStorage.removeItem('userInfo');
-        setUserInfo({ accessToken: '', refreshToken: '' });
+        setUserInfo({ accessToken: '', refreshToken: '', email:'' });
         setIsLoading(false);
         console.log('axios done logout')
       })
@@ -101,9 +102,9 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         console.log(`logout error ${e}`);
         setIsLoading(false);
         //delete all axios memory
-        console.log(`axios clear memory + set userInfo to {}`);
+        console.log(`axios clear memory + set userInfo to { accessToken: '', refreshToken: '', email:'' }`);
         await AsyncStorage.clear();
-        setUserInfo({ accessToken: '', refreshToken: '' });
+        setUserInfo({ accessToken: '', refreshToken: '', email:'' });
       });
   };
 

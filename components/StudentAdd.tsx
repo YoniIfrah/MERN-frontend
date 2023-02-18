@@ -6,8 +6,8 @@ import StudentModel, { Student } from '../model/StudentModel';
 import * as ImagePicker from 'expo-image-picker';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FormData from 'form-data'
-
-
+import Camera from './Camera';
+import Gallery from './Gallery';
 
 const StudentAdd:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
     const [id, setId]= useState("")
@@ -15,47 +15,51 @@ const StudentAdd:FC<{route:any, navigation: any }> = ({route, navigation}) => {
     const [address, setAddress]= useState("")
     const [avatarUri, setAvatarUri] = useState("")
 
-
-    const askPermission = async () => {
-      try {
-          const res = await ImagePicker.getCameraPermissionsAsync()
-          if (!res.granted) {
-              alert("camera permission is requiered!")
-          }
-      } catch (err) {
-          console.log("ask permission error " + err)
-      }
+    const setAvatar = (uri:string) =>{
+      setAvatarUri(uri)
     }
-    useEffect(() => {
-        askPermission()
-    }, [])
 
-    const openCamera = async () => {
-      //need to fix for ios
-      try {
-          const res = await ImagePicker.launchCameraAsync()
-          if (!res.canceled && res.assets.length > 0) {
-              const uri = res.assets[0].uri
-              setAvatarUri(uri)
-          }
 
-      } catch (err) {
-          console.log("open camera error:" + err)
-      }
-    }
-    const openGallery = async () => {
-      //need to fix for ios
-      try {
-          const res = await ImagePicker.launchImageLibraryAsync()
-          if (!res.canceled && res.assets.length > 0) {
-              const uri = res.assets[0].uri
-              setAvatarUri(uri)
-          }
+    // const askPermission = async () => {
+    //   try {
+    //       const res = await ImagePicker.getCameraPermissionsAsync()
+    //       if (!res.granted) {
+    //           alert("camera permission is requiered!")
+    //       }
+    //   } catch (err) {
+    //       console.log("ask permission error " + err)
+    //   }
+    // }
+    // useEffect(() => {
+    //     askPermission()
+    // }, [])
 
-      } catch (err) {
-          console.log("open gallery error:" + err)
-      }
-  }
+    // const openCamera = async () => {
+    //   //need to fix for ios
+    //   try {
+    //       const res = await ImagePicker.launchCameraAsync()
+    //       if (!res.canceled && res.assets.length > 0) {
+    //           const uri = res.assets[0].uri
+    //           setAvatarUri(uri)
+    //       }
+
+    //   } catch (err) {
+    //       console.log("open camera error:" + err)
+    //   }
+    // }
+  //   const openGallery = async () => {
+  //     //need to fix for ios
+  //     try {
+  //         const res = await ImagePicker.launchImageLibraryAsync()
+  //         if (!res.canceled && res.assets.length > 0) {
+  //             const uri = res.assets[0].uri
+  //             setAvatarUri(uri)
+  //         }
+
+  //     } catch (err) {
+  //         console.log("open gallery error:" + err)
+  //     }
+  // }
 
     const onSaveCallback =  async () => {
       const student:Student = {
@@ -89,13 +93,15 @@ const StudentAdd:FC<{route:any, navigation: any }> = ({route, navigation}) => {
         { avatarUri != '' && <Image source={{uri: avatarUri}} style={styles.avatar} ></Image> }
 
         {/*open camera button*/}
-        <TouchableOpacity onPress={openCamera} style={styles.cameraButton}>
+        {/* <TouchableOpacity onPress={openCamera} style={styles.cameraButton}>
           <Ionicons name={'camera'} style={styles.cameraButton} size={50} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <Camera setAvatar={setAvatar}></Camera>
           {/*open galary button*/}
-          <TouchableOpacity onPress={openGallery} style={styles.galleryButton}>
+          {/* <TouchableOpacity onPress={openGallery} style={styles.galleryButton}>
           <Ionicons name={'image'} style={styles.cameraButton} size={50} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <Gallery setAvatar={setAvatar}></Gallery>
       </View>
         <TextInput
           style={styles.input}

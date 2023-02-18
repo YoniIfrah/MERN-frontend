@@ -36,7 +36,7 @@ const HomeScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
       <Tab.Screen name='StudentStackCp' component={StudentStackCp} options={{headerShown:false}}/>
       <Tab.Screen name='InfoScreen' component={InfoScreen}/>
       {/* need to change the component below to be wth the HomeScreen button (logout)! */}
-      <Tab.Screen name='Profile' component={ProfileScreen}/>
+      <Tab.Screen name='Profile' component={ProfileScreen} options={{headerShown:false}}/>
       <Tab.Screen name='Chat' component={InfoScreen}/>
 
 
