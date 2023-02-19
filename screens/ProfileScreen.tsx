@@ -9,34 +9,66 @@ import Camera from '../components/Camera';
 import Gallery from '../components/Gallery';
 import axios from 'axios';
 import baseURL from '../api/baseUrl';
+import StudentModel from '../model/StudentModel';
 
 
 const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
   const {userInfo, logout, isLoading} = useContext(AuthContext)
-  const [avatarUri, setAvatarUri] = useState("")//will be need added to userInfo
+  const [avatarUri, setAvatarUri] = useState(userInfo.ImgUrl)//will be need added to userInfo
   const [Password, setPassword] = useState<String>("");
+  console.log("userInfo.ImgUrl: ", userInfo.ImgUrl)
   const onCancellCallback = () => {
     navigation.goBack()
   }
-  const updateDetails = () =>{
+  const updateDetails = async () =>{
     console.log('updateDetails called')
-    if(Password == "")  return
-
+    console.log(avatarUri)
     const email = userInfo.email
-
-    axios
+    if(Password != ""){
+    
+      
+      axios
       .put(`${baseURL}/auth/${email}`, {
         'password':Password,
       })
       .then(res => {
         console.log(res)
         console.log('status', res.status);
-        console.log('axios done updateDetails')
-
+        console.log('axios done changing password')
+        
       })
       .catch(e => {
-        console.log(`updateDetails error ${e}`);
+        console.log(`change password error ${e}`);
       });
+    }
+    if(avatarUri != ""){
+    
+      //need to implement save photo as profile pic
+      try {
+        console.log('uploading img')
+
+        const url = await StudentModel.uploadImage(avatarUri)
+        console.log(url)
+
+        axios
+        .put(`${baseURL}/file/file/${email}`, {
+          'ImgUrl':url,
+        })
+        .then(res => {
+          console.log(res)
+          console.log('status', res.status);
+          console.log('axios done update ImgUrl')
+          
+        })
+        .catch(e => {
+          console.log(`update ImgUrl axios error ${e}`);
+        });
+
+      } catch (error) {
+        console.log("err changing photo", error)
+      }
+
+    }
   }
 
   const setAvatar = (uri:string) =>{
