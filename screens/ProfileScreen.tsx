@@ -7,6 +7,8 @@ import imgs from '../ImgBundler';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Camera from '../components/Camera';
 import Gallery from '../components/Gallery';
+import axios from 'axios';
+import baseURL from '../api/baseUrl';
 
 
 const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
@@ -16,8 +18,25 @@ const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) =>
   const onCancellCallback = () => {
     navigation.goBack()
   }
-  const updateDetails = (Password: string) =>{
+  const updateDetails = () =>{
+    console.log('updateDetails called')
+    if(Password == "")  return
 
+    const email = userInfo.email
+
+    axios
+      .put(`${baseURL}/auth/${email}`, {
+        'password':Password,
+      })
+      .then(res => {
+        console.log(res)
+        console.log('status', res.status);
+        console.log('axios done updateDetails')
+
+      })
+      .catch(e => {
+        console.log(`updateDetails error ${e}`);
+      });
   }
 
   const setAvatar = (uri:string) =>{
@@ -51,7 +70,7 @@ const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) =>
         <TouchableOpacity onPress={onCancellCallback} style={styles.button}>
             <Text style={styles.buttonText}>CANCELL</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={updateDetails(Password)} style={styles.button}>
+        <TouchableOpacity onPress={updateDetails} style={styles.button}>
             <Text style={styles.buttonText}>UPDATE</Text>
         </TouchableOpacity>
       </View>
