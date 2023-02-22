@@ -6,9 +6,8 @@ import StudentModel, {Student} from '../model/StudentModel';
 import { AuthContext } from '../context/AuthContext';
 
 
-const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:String) => void}> = ({ name, id, image, onRowSelected }) => 
-{
-    const {userInfo} = useContext(AuthContext)
+const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:String) => void}> = ({ name, id, image, onRowSelected }) => {
+    
     const onClick=() => {
         console.log('onClick called with id:  ', id)
         onRowSelected(id)
@@ -25,16 +24,18 @@ const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:
 
         <View style={styles.listRowTextContainer}>
         <Text style={styles.listRowName}>{name}</Text>
-        <Text style={styles.listRowId}>Posted by: {userInfo.email}</Text>
+        <Text style={styles.listRowId}>Posted by: {id}</Text>
         </View>
     </View>
     </TouchableHighlight>
 ) }
 
 const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => {
+    const {userInfo} = useContext(AuthContext)
+
     const onRowSelected = (id:String) =>{
         console.log('selected row was ', id);
-        navigation.navigate('StudentDetails', {studentId: id})
+        navigation.navigate('StudentDetails', {studentId: id})//will be need to chage for edit or delete -similar cp to profile
     }
     const [students, setStudents] = useState<Array<Student>>()
 
@@ -44,11 +45,11 @@ const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => 
             console.log('focus')
             let students: Student[] = []
             try {
-                students = await StudentModel.getAllStudents()
+                students = await StudentModel.getStudentsByEmail(userInfo.email)
                 console.log(students)
-                console.log("fetching students complete")
+                console.log("fetching students by email complete")
             } catch (err) {
-                console.log("fail fetching students " + err)
+                console.log("fail fetching students by email" + err)
             }
             console.log("fetching finish")
             setStudents(students)

@@ -8,6 +8,24 @@ export type Student = {
     image: String,
 }
 
+const getStudentsByEmail = async (email:string) => {
+    console.log("getAllStudents()")
+    const res: any = await StudentApi.getStudentsByEmail(email)
+    let data = Array<Student>()
+    if (res.data) {
+        res.data.forEach((obj: any) => {
+            // console.log("element: " + obj._id)
+            const st: Student = {
+                name: obj.name,
+                id: obj._id,
+                image: obj.avatarUrl
+            }
+            data.push(st)
+        });
+    }
+    return data
+}
+
 const getAllStudents = async () => {
     console.log("getAllStudents()")
     const res: any = await StudentApi.getAllStudents()
@@ -29,7 +47,7 @@ const getAllStudents = async () => {
 const addStudent = async (student: Student) => {
     console.log("addStudent")
     const data = {
-        _id: student.id,
+        email: student.id,
         name: student.name,
         avatarUrl: student.image
     }
@@ -59,4 +77,4 @@ const uploadImage = async (imageURI: String) => {
     }
     return ""
 }
-export default { getAllStudents, addStudent, uploadImage }
+export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail }

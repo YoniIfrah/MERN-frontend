@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import baseURL from '../api/baseUrl';
 
+//every time we change UserInfo we need to change the newObj in the login controller
 type UserInfo = {
   accessToken: string;
   refreshToken: string;

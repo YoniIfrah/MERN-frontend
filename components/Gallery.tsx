@@ -24,7 +24,7 @@ export default function Gallery({setAvatar}:Props) {
             console.log("open gallery error:" + err)
         }
     }
-
+    
 
   return (
     <TouchableOpacity onPress={openGallery} style={styles.galleryButton}>

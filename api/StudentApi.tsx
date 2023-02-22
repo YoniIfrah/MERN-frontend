@@ -1,5 +1,9 @@
 import apiClient from "./ClientApi";
 
+const getStudentsByEmail = async (email: string) => {
+    return apiClient.get("/student/email/"+email)
+}
+
 const getAllStudents = async () => {
     return apiClient.get("/student")
 }
@@ -14,4 +18,4 @@ const uploadImage = async (image: any) => {
 
 //will need to add get student by id and stuff
 
-export default { getAllStudents, addStudent, uploadImage }
+export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail }
