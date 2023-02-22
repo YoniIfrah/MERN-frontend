@@ -9,6 +9,7 @@ import InfoScreen from './InfoScreen'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MyPostsScreen from './MyPostsScreen'
+import HomeStack from '../components/HomeStack'
 
 const Tab = createBottomTabNavigator()
 
@@ -22,7 +23,7 @@ const HomeScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
       let iconName ="";
       if (route.name === 'My Posts') {
       iconName = focused  ? 'md-image': 'md-image-outline';
-      } else if (route.name === 'StudentStackCp') {
+      } else if (route.name === 'Home Page') {
       iconName = focused ? 'ios-home' : 'ios-home-outline';
       } else if (route.name == 'Profile') {
         iconName = focused ? 'person' : 'person-outline';
@@ -34,11 +35,10 @@ const HomeScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
     },
       tabBarActiveTintColor: 'tomato',
       tabBarInactiveTintColor: 'gray', })}>
-      <Tab.Screen name='StudentStackCp' component={StudentStackCp} options={{headerShown:false}}/>
-      <Tab.Screen name='My Posts' component={MyPostsScreen}/>
-      {/* need to change the component below to be wth the HomeScreen button (logout)! */}
+      <Tab.Screen name='Home Page' component={HomeStack} options={{headerShown:false}}/>
+      <Tab.Screen name='My Posts' component={MyPostsScreen} options={{headerShown:false}}/>
       <Tab.Screen name='Profile' component={ProfileScreen} options={{headerShown:false}}/>
-      <Tab.Screen name='Chat' component={InfoScreen}/>
+      <Tab.Screen name='Chat' component={InfoScreen} options={{headerShown:false}}/>
 
 
 

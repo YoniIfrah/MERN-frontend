@@ -1,8 +1,7 @@
-import {FC, useEffect, useState} from 'react';
-import { StyleSheet, Image, View, TouchableOpacity, Text, Button } from 'react-native';
+import { View, Text } from 'react-native'
+import React, { FC } from 'react'
 
-
-const StudnetDetails = () => { 
+const EditPost= () => {
     // const studentId = JSON.stringify(route.params.studentId)
     // useEffect(() => {
     //   console.log('useeffects')
@@ -11,8 +10,8 @@ const StudnetDetails = () => {
     //   })
     // })
     return (
-    <View>
-      <Text>StudnetDetails Screewwn</Text>
+    <View >
+      <Text>EditPost Screen</Text>
       {/* <Text>{studentId}</Text> */}
   
       {/* <Button
@@ -20,6 +19,5 @@ const StudnetDetails = () => {
         onPress={() => navigation.navigate('Home', {newPostId:'6666'})}/> */}
     </View>
     ); 
-  }
-
-export default StudnetDetails
+}
+export default EditPost

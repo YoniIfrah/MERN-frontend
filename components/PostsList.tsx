@@ -6,9 +6,9 @@ import StudentModel, {Student} from '../model/StudentModel';
 import { AuthContext } from '../context/AuthContext';
 
 
-const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:String) => void}> = ({ name, id, image, onRowSelected }) => 
-{
 
+const ListItem: FC<{ name: String, id: String, email:String, image: String, onRowSelected:(id:String) => void}> = ({ name, id, email, image, onRowSelected }) => {
+    
     const onClick=() => {
         console.log('onClick called with id:  ', id)
         onRowSelected(id)
@@ -25,16 +25,20 @@ const ListItem: FC<{ name: String, id: String, image: String, onRowSelected:(id:
 
         <View style={styles.listRowTextContainer}>
         <Text style={styles.listRowName}>{name}</Text>
-        <Text style={styles.listRowId}>Posted by: {id}</Text>
+        <Text style={styles.listRowId}>Posted by: {email}</Text>
         </View>
     </View>
     </TouchableHighlight>
 ) }
 
-const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => {
+const PostsList: FC<{route:any, navigation: any }> = ({route, navigation}) => {
+    const {userInfo} = useContext(AuthContext)
+    const {userPostsOnly} = route.params
+    console.log('userPostsOnly=',userPostsOnly)
+
     const onRowSelected = (id:String) =>{
         console.log('selected row was ', id);
-        navigation.navigate('StudentDetails', {studentId: id})
+        navigation.navigate('PostDetails', {studentId: id})
     }
     const [students, setStudents] = useState<Array<Student>>()
 
@@ -44,11 +48,11 @@ const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => 
             console.log('focus')
             let students: Student[] = []
             try {
-                students = await StudentModel.getAllStudents()
-                console.log(students)
-                console.log("fetching students complete")
+                students = userPostsOnly ? await StudentModel.getStudentsByEmail(userInfo.email) : await StudentModel.getAllStudents()
+                // console.log(students)
+                console.log("fetching student complete userPostsOnly is ",userPostsOnly)
             } catch (err) {
-                console.log("fail fetching students " + err)
+                console.log("fail fetching studentsuserPostsOnly is ",userPostsOnly, "\nerr: " + err)
             }
             console.log("fetching finish")
             setStudents(students)
@@ -60,8 +64,9 @@ const StudentList: FC<{route:any, navigation: any }> = ({route, navigation}) => 
         data={students}
         keyExtractor={student => student.id.toString()}
         renderItem={({ item }) => (
-          <ListItem name={item.name} id={item.id} image={item.image} onRowSelected={onRowSelected}/>
+          <ListItem name={item.name} id={item.id} email={item.email} image={item.image} onRowSelected={onRowSelected}/>
         )}>
+        
       </FlatList>
     )
 }
@@ -95,4 +100,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default StudentList
+export default PostsList

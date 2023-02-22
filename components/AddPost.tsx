@@ -21,7 +21,8 @@ const StudentAdd:FC<{route:any, navigation: any }> = ({route, navigation}) => {
 
     const onSaveCallback =  async () => {
       const student:Student = {
-        id:userInfo.email,
+        id:"",
+        email:userInfo.email,
         name:text,
         image:'stam'
       }
@@ -50,15 +51,8 @@ const StudentAdd:FC<{route:any, navigation: any }> = ({route, navigation}) => {
         { avatarUri == '' && <Image source={imgs.ava} style={styles.avatar} ></Image> }
         { avatarUri != '' && <Image source={{uri: avatarUri}} style={styles.avatar} ></Image> }
 
-        {/*open camera button*/}
-        {/* <TouchableOpacity onPress={openCamera} style={styles.cameraButton}>
-          <Ionicons name={'camera'} style={styles.cameraButton} size={50} />
-        </TouchableOpacity> */}
         <Camera setAvatar={setAvatar}></Camera>
-          {/*open galary button*/}
-          {/* <TouchableOpacity onPress={openGallery} style={styles.galleryButton}>
-          <Ionicons name={'image'} style={styles.cameraButton} size={50} />
-        </TouchableOpacity> */}
+
         <Gallery setAvatar={setAvatar}></Gallery>
       </View>
         <TextInput

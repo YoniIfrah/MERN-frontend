@@ -6,6 +6,7 @@ export type Student = {
     id: String,
     name: String,
     image: String,
+    email:String
 }
 
 const getStudentsByEmail = async (email:string) => {
@@ -18,7 +19,8 @@ const getStudentsByEmail = async (email:string) => {
             const st: Student = {
                 name: obj.name,
                 id: obj._id,
-                image: obj.avatarUrl
+                image: obj.avatarUrl,
+                email: obj.email
             }
             data.push(st)
         });
@@ -36,7 +38,8 @@ const getAllStudents = async () => {
             const st: Student = {
                 name: obj.name,
                 id: obj._id,
-                image: obj.avatarUrl
+                image: obj.avatarUrl,
+                email: obj.email
             }
             data.push(st)
         });
@@ -47,7 +50,7 @@ const getAllStudents = async () => {
 const addStudent = async (student: Student) => {
     console.log("addStudent")
     const data = {
-        email: student.id,
+        email: student.email,
         name: student.name,
         avatarUrl: student.image
     }
