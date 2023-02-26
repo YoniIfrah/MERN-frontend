@@ -1,7 +1,13 @@
 import { View, Text } from 'react-native'
 import React, { FC } from 'react'
 
-const EditPost= () => {
+type Props = {
+  email:String
+  text:String
+  avatarUrl:String
+}
+
+const EditPost= (props:Props) => {
     // const studentId = JSON.stringify(route.params.studentId)
     // useEffect(() => {
     //   console.log('useeffects')

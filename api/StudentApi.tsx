@@ -4,6 +4,10 @@ const getStudentsByEmail = async (email: string) => {
     return apiClient.get("/student/email/"+email)
 }
 
+const getStudentById = async (id: string) => {
+    return apiClient.get("/student/"+id)
+}
+
 const getAllStudents = async () => {
     return apiClient.get("/student")
 }
@@ -18,4 +22,4 @@ const uploadImage = async (image: any) => {
 
 //will need to add get student by id and stuff
 
-export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail }
+export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById }

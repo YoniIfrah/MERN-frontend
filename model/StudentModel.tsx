@@ -28,6 +28,15 @@ const getStudentsByEmail = async (email:string) => {
     return data
 }
 
+
+const getStudentById = async (id:string) => {
+    console.log("getStudentById()")
+    const res: any = await StudentApi.getStudentById(id)
+    const data: Student = res.data
+    // console.log("data = ",data)
+    return data
+}
+
 const getAllStudents = async () => {
     console.log("getAllStudents()")
     const res: any = await StudentApi.getAllStudents()
@@ -80,4 +89,4 @@ const uploadImage = async (imageURI: String) => {
     }
     return ""
 }
-export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail }
+export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById }
