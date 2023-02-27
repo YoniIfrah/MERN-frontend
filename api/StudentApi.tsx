@@ -20,6 +20,12 @@ const uploadImage = async (image: any) => {
     return apiClient.post("/file/file", image);
 };
 
-//will need to add get student by id and stuff
+const updateTextById = async (id:String, text:String) => {
+    return apiClient.put(`/student/update/${id}`, {text})
+}
 
-export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById }
+const deletePostById = async (id:String) => {
+    return apiClient.delete(`/student/delete/${id}`)
+}
+
+export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById, updateTextById, deletePostById }

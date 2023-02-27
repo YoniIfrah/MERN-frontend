@@ -20,8 +20,10 @@ const StudnetDetails = (props:Props) => {
               { props.avatarUrl == '' && <Image source={imgs.ava} style={styles.avatar} ></Image> }
   
           </View>
-          <Text style={styles.input}>Email: {props.email}</Text>
-          <Text style={styles.input}>description: {props.text}</Text>
+          <Text style={styles.buttonText}>Email:</Text>
+          <Text style={styles.input}>{props.email}</Text>
+          <Text style={styles.buttonText}>description:</Text>
+          <Text style={styles.input}>{props.text}</Text>
 
 
         </View>
@@ -39,7 +41,7 @@ const StudnetDetails = (props:Props) => {
       // backgroundColor: 'blue'
     },
     avatar: {
-      height: 300,
+      height: 500,
       // resizeMode: "contain",
       // alignSelf: 'center',
       width: 300
@@ -77,7 +79,7 @@ const StudnetDetails = (props:Props) => {
     },
     buttonText: {
         textAlign: 'center',
-        color: 'white'
+        color: 'Black'
     }
   });
 export default StudnetDetails

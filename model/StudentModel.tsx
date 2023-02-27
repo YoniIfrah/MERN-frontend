@@ -89,4 +89,19 @@ const uploadImage = async (imageURI: String) => {
     }
     return ""
 }
-export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById }
+
+const updateTextById = async (id: String, text:String) => {
+    console.log("updateTextById()")
+    const res: any = await StudentApi.updateTextById(id, text)
+    const data: Student = res.data
+    // console.log("data = ",data)
+    return data
+}
+const deletePostById =async (id:String) => {
+    console.log("deletePostById()")
+    const res = await StudentApi.deletePostById(id)
+    console.log("res = ",res)
+}
+
+
+export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById, updateTextById, deletePostById }
