@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
-const InfoScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
+const ChatScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
     // const itemId = JSON.stringify(route.params.itemId)
     // const name = JSON.stringify(route.params.name)
     // useEffect(() => {
@@ -11,8 +11,8 @@ const InfoScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
     //   })
     // })
     return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Info Screen</Text>
+    <View style={styles.container}>
+      <Text>ChatScreen </Text>
       {/* <Text>id: {itemId}</Text>
       <Text>{name}</Text> */}
   
@@ -23,4 +23,12 @@ const InfoScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
     ); 
   }
 
-  export default InfoScreen
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
+
+  export default ChatScreen

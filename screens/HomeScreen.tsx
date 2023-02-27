@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay'
 import StudentStackCp from '../components/StudentStackCp'
 import ProfileScreen from './ProfileScreen'
-import InfoScreen from './InfoScreen'
+import ChatScreen from './ChatScreen'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MyPostsScreen from './MyPostsScreen'
@@ -38,7 +38,7 @@ const HomeScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
       <Tab.Screen name='Home Page' component={HomeStack} options={{headerShown:false}}/>
       <Tab.Screen name='My Posts' component={MyPostsScreen} options={{headerShown:false}}/>
       <Tab.Screen name='Profile' component={ProfileScreen} options={{headerShown:false}}/>
-      <Tab.Screen name='Chat' component={InfoScreen} options={{headerShown:false}}/>
+      <Tab.Screen name='Chat' component={ChatScreen} options={{headerShown:false}}/>
 
 
 
