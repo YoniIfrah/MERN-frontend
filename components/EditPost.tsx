@@ -4,6 +4,11 @@ import imgs from '../ImgBundler';
 import OS from '../utils/OS_Adapter'
 import { TextInput } from 'react-native-gesture-handler';
 import StudentModel from '../model/StudentModel';
+import Camera from './Camera';
+import Gallery from './Gallery';
+import axios from 'axios';
+import baseURL from '../api/baseUrl';
+
 
 
 type Props = {
@@ -16,9 +21,16 @@ type Props = {
 
 const EditPost = (props:Props) => {
     const [Description, setDescription] = useState<String>(props.text);
+
+    const [avatarUri, setAvatarUri] = useState<String>(props.avatarUrl)//will be need added to userInfo
+
+    const setAvatar = (uri:string) =>{
+      setAvatarUri(uri)
+    }
     useEffect(() => {
       setDescription(props.text);
-  }, [props.text])//end useEffect
+      setAvatarUri(props.avatarUrl)
+  }, [props.text,props.avatarUrl])//end useEffect
 
     const updateDetails = async () =>{
       console.log(Description)
@@ -28,14 +40,36 @@ const EditPost = (props:Props) => {
         setDescription(res.name)
       } else {
         console.log("no http req needed")
-      }
+      }//end text
+
+      if(avatarUri != props.avatarUrl){
+        try {
+
+          const url = await StudentModel.uploadImage(avatarUri)
+
+          //TODO: need to update student url according to the url
+          console.log("URl= ",url)
+          if(url==''){
+            const res = await StudentModel.updateImageUrlById(props.id, avatarUri)//*need to be change it url
+          } else {
+            const res = await StudentModel.updateImageUrlById(props.id, url)
+          }
+          
+        } catch (error) {
+          console.log("err changing photo", error)
+        }
+      } else {
+        console.log("no http req needed2")
+      }//end photo
+
+
+
       props.navigation.goBack()
 
     }
 
     const deletePost = async () =>{
       console.log("deletePost")
-      //TODO add delete req
       await StudentModel.deletePostById(props.id)
       props.navigation.goBack()
     }
@@ -43,10 +77,14 @@ const EditPost = (props:Props) => {
       <ScrollView>
         <View style={styles.container}>
             <View>
-              { props.avatarUrl != '' && <Image source={{uri: props.avatarUrl.toString()}} style={styles.avatar} ></Image> }
-              { props.avatarUrl == '' && <Image source={imgs.ava} style={styles.avatar} ></Image> }
-  
-          </View>
+              { avatarUri.toString() != '' && <Image source={{uri: avatarUri.toString()}} style={styles.avatar} ></Image> }
+              { avatarUri.toString() == '' && <Image source={imgs.ava} style={styles.avatar} ></Image> }
+            </View>
+            <View style={{padding:30}}>
+            <Camera setAvatar={setAvatar}></Camera>
+            <Gallery setAvatar={setAvatar}></Gallery>
+
+            </View>
           <Text style={styles.buttonText}>Email:</Text>
           <Text style={styles.input}>{props.email}</Text>
           <Text style={styles.buttonText}>description:</Text>

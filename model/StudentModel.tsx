@@ -71,6 +71,7 @@ const addStudent = async (student: Student) => {
 }
 
 const uploadImage = async (imageURI: String) => {
+    console.log("uploadImage()")
     var body = new FormData();
     body.append('file', { name: "name", type: 'image/jpeg', uri: imageURI });
     try {
@@ -90,6 +91,7 @@ const uploadImage = async (imageURI: String) => {
     return ""
 }
 
+
 const updateTextById = async (id: String, text:String) => {
     console.log("updateTextById()")
     const res: any = await StudentApi.updateTextById(id, text)
@@ -97,6 +99,14 @@ const updateTextById = async (id: String, text:String) => {
     // console.log("data = ",data)
     return data
 }
+
+
+const updateImageUrlById =async (id: String, imgUrl:String) => {
+    console.log("updateImageUrlById")
+    const res: any = await StudentApi.updateImageUrlById(id, imgUrl)
+    return res.data
+}
+
 const deletePostById =async (id:String) => {
     console.log("deletePostById()")
     const res = await StudentApi.deletePostById(id)
@@ -104,4 +114,5 @@ const deletePostById =async (id:String) => {
 }
 
 
-export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById, updateTextById, deletePostById }
+
+export default {updateImageUrlById, getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById, updateTextById, deletePostById }

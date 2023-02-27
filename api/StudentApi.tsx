@@ -28,4 +28,9 @@ const deletePostById = async (id:String) => {
     return apiClient.delete(`/student/delete/${id}`)
 }
 
-export default { getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById, updateTextById, deletePostById }
+const updateImageUrlById = async (id:String, image:String) => {
+    return apiClient.put("/student/updatedImg/"+id, {image});
+};
+
+
+export default {updateImageUrlById, getAllStudents, addStudent, uploadImage, getStudentsByEmail, getStudentById, updateTextById, deletePostById }

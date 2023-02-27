@@ -5,6 +5,8 @@
  */
 // const baseURL = 'http://192.168.0.117:3000' //home
 const baseURL = 'http://10.200.201.233:3000' //sce
+// const baseURL = 'http://192.168.246.174:3000' //cell phone
+
 // const baseURL = "http://10.0.0.28:3000" //zamir
 
 export default baseURL

@@ -1,5 +1,5 @@
 import { StyleSheet, Image, View, TouchableOpacity, Text, Button, TextInput, ScrollView } from 'react-native';
-import React, { useState, FC, useContext} from 'react'
+import React, { useState, FC, useContext, useEffect} from 'react'
 import OS from '../utils/OS_Adapter'
 import { AuthContext } from '../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -17,6 +17,7 @@ const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) =>
   const [avatarUri, setAvatarUri] = useState(userInfo.ImgUrl)//will be need added to userInfo
   const [Password, setPassword] = useState<String>("");
   console.log("userInfo.ImgUrl: ", userInfo.ImgUrl)
+
   const onCancellCallback = () => {
     navigation.goBack()
   }
@@ -42,8 +43,6 @@ const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) =>
       });
     }
     if(avatarUri != ""){
-    
-      //need to implement save photo as profile pic
       try {
         console.log('uploading img')
 
