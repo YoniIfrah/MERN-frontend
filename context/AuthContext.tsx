@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import baseURL from '../api/baseUrl';
+import * as AuthSession from 'expo-auth-session';
 
 //every time we change UserInfo we need to change the newObj in the login controller
 type UserInfo = {
@@ -9,6 +10,7 @@ type UserInfo = {
   refreshToken: string;
   email:string
   ImgUrl:string
+  Oauth:boolean
 };
 
 type AuthContextType = {
@@ -18,22 +20,19 @@ type AuthContextType = {
   register: (email: string, password: string) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
-  Oauth:boolean
 };
 
 export const AuthContext = createContext<AuthContextType>({
   isLoading: false,
-  userInfo: { accessToken: '', refreshToken: '', email:'', ImgUrl:'' },
+  userInfo: { accessToken: '', refreshToken: '', email:'', ImgUrl:'',   Oauth:false},
   splashLoading: false,
   register: (email: string, password: string) => {},
   login: (email: string, password: string) => {},
   logout: () => {},
-  Oauth:false
-
 });
 
 export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
-  const [userInfo, setUserInfo] = useState<UserInfo>({ accessToken: '', refreshToken: '', email:'', ImgUrl:'' });
+  const [userInfo, setUserInfo] = useState<UserInfo>({ accessToken: '', refreshToken: '', email:'', ImgUrl:'',  Oauth:false});
   const [Oauth, setOauth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
@@ -48,14 +47,14 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
       })
       .then(res => {
         let userInfo = res.data as UserInfo;
+        //if the user is registered  with google he wont be able to change password
+        userInfo.Oauth = isGoogle
         console.log('status', res.status);
-
         setUserInfo(userInfo);
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
         setIsLoading(false);
         console.log(userInfo);
         console.log('axios done register')
-        setOauth(isGoogle)//if the user is looged in with google he wont be able to change password
 
 
       })
@@ -75,13 +74,15 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
       })
       .then(res => {
         let userInfo = res.data as UserInfo;
+        userInfo.Oauth = isGoogle
+        //if the user is looged in with google he wont be able to change password
         console.log(userInfo);
         console.log('status', res.status);
         setUserInfo(userInfo);
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
         setIsLoading(false);
         console.log('axios done login')
-        setOauth(isGoogle)//if the user is looged in with google he wont be able to change password
+
 
       })
       .catch(e => {
@@ -94,6 +95,16 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
     setIsLoading(true);
     console.log('at logout func ', userInfo);
 
+  //   if (userInfo.Oauth){
+  //   AuthSession.revokeAsync({
+  //     token: userInfo.accessToken
+  //   }, {
+  //     revocationEndpoint: "https://oauth2.googleapis.com/revoke"
+  //   }).then( () =>{
+  //     console.log("AuthSession logout")
+  //   })
+  // }
+
     axios
       .get(`${baseURL}/auth/logout`, {
         headers: { Authorization: `JWT ${userInfo.refreshToken}` },
@@ -103,7 +114,7 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         console.log('status', res.status);
 
         AsyncStorage.removeItem('userInfo');
-        setUserInfo({ accessToken: '', refreshToken: '', email:'', ImgUrl:'' });
+        setUserInfo({ accessToken: '', refreshToken: '', email:'', ImgUrl:'', Oauth:false });
         setIsLoading(false);
         console.log('axios done logout')
       })
@@ -113,7 +124,7 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         //delete all axios memory
         console.log(`axios clear memory + set userInfo to { accessToken: '', refreshToken: '', email:'' }`);
         await AsyncStorage.clear();
-        setUserInfo({ accessToken: '', refreshToken: '', email:'', ImgUrl:'' });
+        setUserInfo({ accessToken: '', refreshToken: '', email:'', ImgUrl:'', Oauth:false });
       });
   };
 
@@ -148,7 +159,6 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         register,
         login,
         logout,
-        Oauth
       }}
       >
       {children}

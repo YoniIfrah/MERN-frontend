@@ -13,7 +13,7 @@ import StudentModel from '../model/StudentModel';
 
 
 const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
-  const {userInfo, logout, isLoading, Oauth} = useContext(AuthContext)
+  const {userInfo, logout, isLoading} = useContext(AuthContext)
   const [avatarUri, setAvatarUri] = useState(userInfo.ImgUrl)//will be need added to userInfo
   const [Password, setPassword] = useState<String>("");
   console.log("userInfo.ImgUrl: ", userInfo.ImgUrl)
@@ -94,7 +94,7 @@ const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) =>
         <Text style={{textAlign:'center', paddingTop:20}}>Email:</Text>
         <Text style={styles.input}> {userInfo.email}</Text>
 
-        {!Oauth && 
+        {!userInfo.Oauth && 
         <TextInput 
         style={styles.input}
         placeholder='Enter New Password'
