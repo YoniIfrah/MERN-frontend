@@ -18,6 +18,7 @@ type AuthContextType = {
   register: (email: string, password: string) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
+  Oauth:boolean
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -27,14 +28,17 @@ export const AuthContext = createContext<AuthContextType>({
   register: (email: string, password: string) => {},
   login: (email: string, password: string) => {},
   logout: () => {},
+  Oauth:false
+
 });
 
 export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
   const [userInfo, setUserInfo] = useState<UserInfo>({ accessToken: '', refreshToken: '', email:'', ImgUrl:'' });
+  const [Oauth, setOauth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
 
-  const register = (email: string, password: string) => {
+  const register = (email: string, password: string, isGoogle:boolean=false) => {
     setIsLoading(true);
 
     axios
@@ -51,6 +55,8 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         setIsLoading(false);
         console.log(userInfo);
         console.log('axios done register')
+        setOauth(isGoogle)//if the user is looged in with google he wont be able to change password
+
 
       })
       .catch(e => {
@@ -59,7 +65,7 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
       });
   };
 
-  const login = (email: string, password: string) => {
+  const login = (email: string, password: string, isGoogle:boolean=false) => {
     setIsLoading(true);
 
     axios
@@ -75,6 +81,7 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
         setIsLoading(false);
         console.log('axios done login')
+        setOauth(isGoogle)//if the user is looged in with google he wont be able to change password
 
       })
       .catch(e => {
@@ -141,6 +148,7 @@ export const AuthProvider: React.FC<{children: any }> = ({children}) =>{
         register,
         login,
         logout,
+        Oauth
       }}
       >
       {children}

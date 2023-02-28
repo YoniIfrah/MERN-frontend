@@ -13,7 +13,7 @@ import StudentModel from '../model/StudentModel';
 
 
 const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
-  const {userInfo, logout, isLoading} = useContext(AuthContext)
+  const {userInfo, logout, isLoading, Oauth} = useContext(AuthContext)
   const [avatarUri, setAvatarUri] = useState(userInfo.ImgUrl)//will be need added to userInfo
   const [Password, setPassword] = useState<String>("");
   console.log("userInfo.ImgUrl: ", userInfo.ImgUrl)
@@ -90,13 +90,18 @@ const ProfileScreen:FC<{route:any, navigation: any }> = ({route, navigation}) =>
             <Gallery setAvatar={setAvatar}></Gallery>
 
         </View>
-        <Text>Email: {userInfo.email}</Text>
+
+        <Text style={{textAlign:'center', paddingTop:20}}>Email:</Text>
+        <Text style={styles.input}> {userInfo.email}</Text>
+
+        {!Oauth && 
         <TextInput 
-          style={styles.input}
-          placeholder='Enter New Password'
-          secureTextEntry
-          onChangeText = { (text) => setPassword(text)}
-          ></TextInput>
+        style={styles.input}
+        placeholder='Enter New Password'
+        secureTextEntry
+        onChangeText = { (text) => setPassword(text)}
+        ></TextInput>
+      }
         <View style={styles.buttonesContainer}>
         <TouchableOpacity onPress={onCancellCallback} style={styles.button}>
             <Text style={styles.buttonText}>CANCELL</Text>

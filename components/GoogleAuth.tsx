@@ -30,8 +30,8 @@ const GoogleAuth = () => {
         const userInfo = await response.json();
         console.log("userInfo =",userInfo.email.toString());
         setUser(userInfo);
-        register(userInfo.email.toString(), "123")
-        login(userInfo.email.toString(), "123")
+        register(userInfo.email.toString(), "123", true)
+        login(userInfo.email.toString(), "123", true)
       }
 
     const ShowUserInfo = () =>{
