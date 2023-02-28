@@ -6,6 +6,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+
+    "scheme": "com.my-app",
+
+
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -18,9 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.my-app"
     },
     "android": {
+      "package":"com.my-app",
+
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

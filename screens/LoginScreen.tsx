@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import OS from '../utils/OS_Adapter'
 import { AuthContext } from '../context/AuthContext'
 import Spinner from 'react-native-loading-spinner-overlay'
+import GoogleAuth from '../components/GoogleAuth'
 
 
 
@@ -39,6 +40,7 @@ const LoginScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
+      <GoogleAuth></GoogleAuth>
     </View>
   )
 }
