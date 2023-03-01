@@ -2,8 +2,9 @@ import { FC, useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import socket from "../utils/socket";
-import SendMessage from "../components/SendMessage";
-import ShowMesseges from "../components/ShowMesseges";
+
+import TextBox from "../components/Chat/TextBox";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const ChatScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => { 
@@ -39,9 +40,11 @@ const ChatScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
 
 
     return (
-    <View >
-      <ShowMesseges messages={Message} />
-      <SendMessage handleSendMessage={(val: string) => handdleSendMsg(val, userInfo.email)} />
+    <View style={{ flex: 1, backgroundColor: 'gray' }}>
+        <View style={{ flex: 9, backgroundColor: 'white',alignItems: 'center', justifyContent: 'center',  }}>
+          <Text style={{color:'black'}}>...Header or Body</Text>
+        </View>
+      <TextBox></TextBox>
     </View>
     ); 
   }
@@ -52,6 +55,7 @@ const ChatScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    footer:{ flex: 1, backgroundColor: 'yellow', alignItems: 'center', justifyContent: 'center', }
   });
 
   export default ChatScreen
