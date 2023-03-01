@@ -4,7 +4,6 @@ import { AuthContext } from "../context/AuthContext";
 import socket from "../utils/socket";
 import OS from '../utils/OS_Adapter'
 import TextBox from "../components/Chat/TextBox";
-import { ScrollView } from "react-native-gesture-handler";
 import MessageComponent from "../components/Chat/MessageComponent";
 import { stylesChat } from "../utils/stylesChat";
 
@@ -19,12 +18,15 @@ const ChatScreen:FC<{route:any, navigation: any }> = ({route, navigation}) => {
         text: "Message from another sender",
         time: "07:50",
         user: "Tomer",
+        img: ""
+
     },
     {
         id: "2",
         text: "Message from user",
         time: "08:50",
         user: userInfo.email,
+        img: userInfo.ImgUrl
     },
 ]);
 function handleUpdate(newValue: any) {
@@ -72,7 +74,7 @@ function handleUpdate(newValue: any) {
                     <FlatList
                         data={chatMessages}
                         renderItem={({ item }) => (
-                            <MessageComponent item={item} user={userInfo.email} />
+                            <MessageComponent item={item} user={userInfo.email}/>
                         )}
                         keyExtractor={(item) => item.id}
                     />

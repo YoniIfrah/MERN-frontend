@@ -1,7 +1,8 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { stylesChat } from "../../utils/stylesChat";
+import Img from '../../ImgBundler'
 
 interface MessageComponentProps {
   item: {
@@ -9,15 +10,21 @@ interface MessageComponentProps {
     text: string;
     time: string;
     user: string;
+    img: string
   };
   user: string;
 }
 
-export default function MessageComponent({
-  item,
-  user,
-}: MessageComponentProps): JSX.Element {
+// export default function MessageComponent({
+//   item,
+//   user,
+// }: MessageComponentProps): JSX.Element {
+
+const MessageComponent = (props:MessageComponentProps) => {
+  const {item, user} = props
   const status = item.user !== user;
+
+  
 
   return (
     <View>
@@ -29,12 +36,23 @@ export default function MessageComponent({
         }
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Ionicons
+          {/* <Ionicons
             name='person-circle-outline'
             size={30}
             color='black'
             style={stylesChat.mvatar}
-          />
+          /> */}
+          {/* <Image  source={{uri:item.img}} style={{height:30, width:30, borderRadius:20, margin:10}} ></Image> */}
+          {
+            //default image
+          }
+          { item.img == '' && <Image source={Img.ava} style={{height:30, width:30, borderRadius:20, margin:10}}  ></Image> }
+          {
+            //user image
+          }
+          { item.img != '' && <Image source={{uri: item.img}} style={{height:30, width:30, borderRadius:20, margin:10}}  ></Image> }
+
+
           <View
             style={
               status
@@ -50,3 +68,4 @@ export default function MessageComponent({
     </View>
   );
 }
+export default MessageComponent
