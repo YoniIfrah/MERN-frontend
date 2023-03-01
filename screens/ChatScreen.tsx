@@ -82,7 +82,7 @@ function handleUpdate(newValue: any) {
                     ""
                 )}
             </View>
-      <TextBox updateMessages={handleUpdate} messages={chatMessages} setMessages={setChatMessages} user={userInfo.email}></TextBox>
+      <TextBox updateMessages={handleUpdate} messages={chatMessages} setMessages={setChatMessages} user={userInfo.email} img={userInfo.ImgUrl}></TextBox>
     </View>
     ); 
   }

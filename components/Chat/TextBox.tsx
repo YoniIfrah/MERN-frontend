@@ -6,6 +6,7 @@ import { stylesChat } from '../../utils/stylesChat'
 
 type Props ={
     user:string
+    img:string
     messages: any
     setMessages: React.Dispatch<React.SetStateAction<any>>;
     updateMessages: (messages: any) => void;
@@ -13,7 +14,7 @@ type Props ={
 }
 
 const TextBox = (props:Props) => {
-    const {user, messages, setMessages, updateMessages} = props
+    const {user, messages, setMessages, updateMessages, img} = props
     const [Message, setMessage] = useState<string>();
     const handleNewMessage = () => {
         const hour =
@@ -44,6 +45,7 @@ const TextBox = (props:Props) => {
             text: Message,
             time: "07:55",
             user: user,
+            img: img
         },)
         setMessages(MsgArr)
         updateMessages(MsgArr);
